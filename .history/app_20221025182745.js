@@ -2,33 +2,39 @@ const todo = document.querySelector("input");
 const button = document.querySelector("button");
 let todoList = document.querySelector("#list");
 
-document.onload = render()
-function render() {
+let todoArray = [];
 
+function render() {
+  let items;
   const getLocalStorage = JSON.parse(localStorage.getItem("todos"));
+  console.log(
+      getLocalStorage
+  )
   let new_div = '';
-  if (getLocalStorage != null) {
-    getLocalStorage.forEach((element,index) => {
+  // if (getLocalStorage != null) {
+    getLocalStorage.forEach((element) => {
       new_div += `
               <li class="li" style="display: flex; justify-content: space-between; width: 200px;">
                   <span>${element}</span>
-                  <button id="del" onclick="delFunc(${index})">delete</button>
+                  <button id="del" onclick="delFunc()">delete</button>
+                  
               </li>
           `;
     });
-  }
+  // }
 
+  console.log(todoArray)
   todoList.innerHTML = new_div;
   
 }
 
-function delFunc(index) {
+function delFunc(e) {
+  const li = document.querySelector(".li");
   
-  let getLocalStorage = JSON.parse(localStorage.getItem("todos"));
-  getLocalStorage.splice(index, 1);//remove it
-
-  localStorage.setItem("todos", JSON.stringify(getLocalStorage));
+  let index = todoArray.indexOf(li);
+  todoArray.splice(index, 1);//remove it
   
+  localStorage.setItem('todos', JSON.stringify(todoArray));//set again
   render()
    
 }
@@ -38,14 +44,11 @@ button.addEventListener("click", () => {
   if (value === "") {
     return;
   }
+  todoArray.push(value);
 
   let items = localStorage.getItem("todos");
   if (items === null) {
-    localStorage.setItem("todos", JSON.stringify([value]));
-  }else{
-    let getLocalStorage = JSON.parse(localStorage.getItem("todos"));
-    getLocalStorage.push(value);
-    localStorage.setItem("todos", JSON.stringify(getLocalStorage));
+    localStorage.setItem("todos", JSON.stringify(todoArray));
   }
 
   

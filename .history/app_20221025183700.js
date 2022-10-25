@@ -2,21 +2,23 @@ const todo = document.querySelector("input");
 const button = document.querySelector("button");
 let todoList = document.querySelector("#list");
 
-document.onload = render()
-function render() {
+let todoArray = [];
 
+function render() {
+  let items;
   const getLocalStorage = JSON.parse(localStorage.getItem("todos"));
   let new_div = '';
-  if (getLocalStorage != null) {
+  // if (getLocalStorage != null) {
     getLocalStorage.forEach((element,index) => {
       new_div += `
               <li class="li" style="display: flex; justify-content: space-between; width: 200px;">
                   <span>${element}</span>
                   <button id="del" onclick="delFunc(${index})">delete</button>
+                  
               </li>
           `;
     });
-  }
+  // }
 
   todoList.innerHTML = new_div;
   
@@ -38,10 +40,11 @@ button.addEventListener("click", () => {
   if (value === "") {
     return;
   }
+  todoArray.push(value);
 
   let items = localStorage.getItem("todos");
   if (items === null) {
-    localStorage.setItem("todos", JSON.stringify([value]));
+    localStorage.setItem("todos", JSON.stringify(todoArray));
   }else{
     let getLocalStorage = JSON.parse(localStorage.getItem("todos"));
     getLocalStorage.push(value);

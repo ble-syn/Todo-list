@@ -2,21 +2,25 @@ const todo = document.querySelector("input");
 const button = document.querySelector("button");
 let todoList = document.querySelector("#list");
 
-document.onload = render()
-function render() {
 
+function render() {
+  let items;
   const getLocalStorage = JSON.parse(localStorage.getItem("todos"));
   let new_div = '';
-  if (getLocalStorage != null) {
+  // if (getLocalStorage != null) {
     getLocalStorage.forEach((element,index) => {
       new_div += `
               <li class="li" style="display: flex; justify-content: space-between; width: 200px;">
                   <span>${element}</span>
+                  <span>
+                    <input value="${element}"/>
+                  </span>
+                  <button id="del" onclick="editFunc(${index})">edit</button>
                   <button id="del" onclick="delFunc(${index})">delete</button>
               </li>
           `;
     });
-  }
+  // }
 
   todoList.innerHTML = new_div;
   

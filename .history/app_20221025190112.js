@@ -4,10 +4,9 @@ let todoList = document.querySelector("#list");
 
 document.onload = render()
 function render() {
-
+  let items;
   const getLocalStorage = JSON.parse(localStorage.getItem("todos"));
   let new_div = '';
-  if (getLocalStorage != null) {
     getLocalStorage.forEach((element,index) => {
       new_div += `
               <li class="li" style="display: flex; justify-content: space-between; width: 200px;">
@@ -16,7 +15,6 @@ function render() {
               </li>
           `;
     });
-  }
 
   todoList.innerHTML = new_div;
   
